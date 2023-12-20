@@ -15,29 +15,37 @@ function autoresize() {
 function sort_arr() {
     let arr = input.value.split(' ');
     answer.innerHTML = '';
-    for (let i = 0; i < Math.ceil(arr.length / 2); i++) {
+    let count_number = 0;
+    let count_str = 0;
+    for (let i = 0; i < arr.length; i++) {
         let str_min, ind_min, number_max, ind_max;
-        for (let j = i; j < arr.length - i; j++) {
+        let end = true;
+        for (let j = count_str; j < arr.length - count_number; j++) {
             if (Number(arr[j])) {
                 if (!number_max || number_max < Number(arr[j])) {
                     number_max = Number(arr[j]);
                     ind_max = j;
+                    end = false;
                 }
             } else {
                 if (!str_min || str_min > arr[j]) {
                     str_min = arr[j];
                     ind_min = j;
+                    end = false;
                 }
             }
         }
-        if (ind_min > ind_max) ind_max++;
+        if (end) break;
         if (ind_min)  {
+            if (ind_min > ind_max) ind_max++;
             arr.splice(ind_min, 1);
             arr.unshift(str_min);
+            count_str++;
         }
-        if (ind_max) {
+        if (ind_max || ind_max == 0) {
             arr.splice(ind_max, 1);
             arr.push(number_max);
+            count_number++;
         }
         answer.innerHTML += '<div>'+ (i + 1) + ') ' + arr+ '</div>';
     }
