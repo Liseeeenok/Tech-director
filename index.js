@@ -22,13 +22,13 @@ function sort_arr() {
         let end = true;
         for (let j = count_str; j < arr.length - count_number; j++) {
             if (Number(arr[j])) {
-                if ((!number_max || number_max < Number(arr[j])) && (j != arr.length - count_number - 1 || j == 0)) {
+                if ((!number_max || number_max < Number(arr[j]))) {
                     number_max = Number(arr[j]);
                     ind_max = j;
                     end = false;
                 }
             } else {
-                if ((!str_min || str_min > arr[j]) && (j != count_str || j == arr.length - 1)) {
+                if ((!str_min || str_min > arr[j])) {
                     str_min = arr[j];
                     ind_min = j;
                     end = false;
@@ -36,8 +36,9 @@ function sort_arr() {
             }
         }
         if (end) break;
-        if (ind_min)  {
+        if (ind_min || ind_min == 0)  {
             if (ind_min > ind_max) ind_max++;
+            console.log(ind_min);
             arr.splice(ind_min, 1);
             arr.unshift(str_min);
             count_str++;
